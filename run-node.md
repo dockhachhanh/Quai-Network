@@ -108,11 +108,20 @@ slices = '[0 0],[0 1],[0 2]'
 #Tạo file dịch vụ quai-node.service với nội dung sau:
 
 ```bash
-# Lấy user hiện tại
+# Lấy tên người dùng hiện tại
 YOUR_USERNAME=$(whoami)
 
-# Lấy đường dẫn đến go-quai
-GO_QUAI_PATH=$(readlink -f $(dirname $(which go-quai)))
+# Đường dẫn tới thư mục gốc của go-quai
+GO_QUAI_DIR="$HOME/go-quai"
+
+# Đường dẫn tới file thực thi go-quai
+GO_QUAI_EXEC="$GO_QUAI_DIR/build/bin/go-quai"
+
+# Kiểm tra nếu file thực thi go-quai tồn tại
+if [ ! -f "$GO_QUAI_EXEC" ]; then
+  echo "go-quai không được tìm thấy tại $GO_QUAI_EXEC"
+  exit 1
+fi
 
 # Tạo nội dung file dịch vụ và ghi vào /etc/systemd/system/quai-node.service
 sudo tee /etc/systemd/system/quai-node.service > /dev/null <<EOL
@@ -122,14 +131,15 @@ After=network.target
 
 [Service]
 User=$YOUR_USERNAME
-WorkingDirectory=$GO_QUAI_PATH
-ExecStart=$GO_QUAI_PATH/build/bin/go-quai start
+WorkingDirectory=$GO_QUAI_DIR
+ExecStart=$GO_QUAI_EXEC start
 Restart=always
 RestartSec=3
 
 [Install]
 WantedBy=multi-user.target
 EOL
+
 ```
 # Reload systemd và enable dịch vụ
 
