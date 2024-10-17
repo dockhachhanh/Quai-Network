@@ -15,7 +15,7 @@ nano ~/stratum.sh
 ```bash
 #!/bin/bash
 cd $HOME/go-quai-stratum
-./go-quai-stratum --region=cyprus --zone=cyprus1 --stratum=3334
+./build/bin/go-quai-stratum --region=cyprus --zone=cyprus1 --stratum=3334
 ```
 ### Lưu file và thoát trình soạn thảo (Ctrl + X, sau đó nhấn Y và Enter).
 ### Đảm bảo script stratum.sh có quyền thực thi:
