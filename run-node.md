@@ -50,7 +50,7 @@ Kiểm tra phiên bản mới nhất: https://github.com/dominant-strategies/go-
 Ví dụ v0.38.0
 
 ```bash
-git checkout v0.32.0
+git checkout v0.38.0
 ```
 ## Build go-quai
 #Chạy lệnh sau để build go-quai.
@@ -59,6 +59,19 @@ git checkout v0.32.0
 make go-quai
 ```
 ## Cấu Hình và Chạy Node
+### Cách 1: Chạy trực tiếp
+```bash
+cd ~/go-quai
+./build/bin/go-quai start \
+--node.slices '[0 0]' \
+--node.genesis-nonce 6224362036655375007 \
+--node.quai-coinbases '0x0000000000000000000000000000000000000000' \
+--node.qi-coinbases '0x0080000000000000000000000000000000000000' \
+--node.miner-preference '0.5'
+
+```
+
+### Cách 2: Chạy thông qua file config.
 Tạo file cấu hình
 Tạo file cấu hình cho node của bạn. file config.toml sẽ được tạo ra trong thư mục ~/.config/go-quai/.
 
@@ -79,30 +92,23 @@ environment = 'colosseum'
 # Đối với Global Node:
 
 ```bash
-[global node]
-coinbases = '0x00a3e45aa16163F2663015b6695894D918866d19,0x01a3e45aa16163F2663015b6695894D918866d19,0x02a3e45aa16163F2663015b6695894D918866d19,0x10a3e45aa16163F2663015b6695894D918866d19,0x11a3e45aa16163F2663015b6695894D918866d19,0x12a3e45aa16163F2663015b6695894D918866d19,0x20a3e45aa16163F2663015b6695894D918866d19,0x21a3e45aa16163F2663015b6695894D918866d19,0x22a3e45aa16163F2663015b6695894D918866d19'
-slices = '[0 0],[0 1],[0 2],[1 0],[1 1],[1 2],[2 0],[2 1],[2 2]'
-```
-# Đối với Single Slice Node:
-
-```bash
-[single slice node]
-coinbases = '0x00a3e45aa16163F2663015b6695894D918866d19'
+# Golden Age Testnet geneis nonce
+genesis-nonce 6224362036655375007
+# single slice node running cyprus1, one quai address + one qi address
+quai-coinbases '0x0000000000000000000000000000000000000000'
+qi-coinbases '0x0080000000000000000000000000000000000000'
 slices = '[0 0]'
+quaistats 'username:password@stats.colosseum.quai.network/api/v2'
 ```
-# Đối với Multi Slice Node (Ví dụ 3 slices):
 
-```bash
-[multi slice node (3 slices)]
-coinbases = '0x00a3e45aa16163F2663015b6695894D918866d19,0x01a3e45aa16163F2663015b6695894D918866d19,0x02a3e45aa16163F2663015b6695894D918866d19'
-slices = '[0 0],[0 1],[0 2]'
-```
 ## Khởi Chạy Node
 # Chạy lệnh sau để khởi chạy node.
 
 ```bash
+cd ~/go-quai
 ./build/bin/go-quai start
 ```
+
 ## Dịch Vụ Systemd
 #Tạo một dịch vụ systemd để quản lý node của bạn.
 #Tạo file dịch vụ quai-node.service với nội dung sau:
