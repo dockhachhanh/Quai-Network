@@ -47,7 +47,7 @@ git clone https://github.com/dominant-strategies/go-quai
 cd go-quai
 ```
 Kiểm tra phiên bản mới nhất: https://github.com/dominant-strategies/go-quai/tags
-Ví dụ v0.32.0
+Ví dụ v0.38.0
 
 ```bash
 git checkout v0.32.0
